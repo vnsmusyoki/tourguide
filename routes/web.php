@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\AdminAccountController;
 use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -25,3 +26,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/', [PagesController::class, 'index']);
 Route::get('/about-us', [PagesController::class, 'aboutus']);
 Route::get('/contact-us', [PagesController::class, 'contactus']);
+Route::get('/admin/dashboard', [AdminAccountController::class, 'index'])->name('admin');
