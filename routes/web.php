@@ -32,5 +32,8 @@ Route::prefix('admin')->group(function(){
     Route::post('store-destination', [AdminAccountController::class, 'storedestination']);
     Route::get('destination-images/{destinationid}', [AdminAccountController::class, 'destinationimages']);
     Route::get('delete-image/{image}', [AdminAccountController::class, 'deleteimage']);
+    Route::get('edit-destination/{destinationid}', [AdminAccountController::class, 'editdestination']);
+    Route::patch('update-destination/{destinationid}', [AdminAccountController::class, 'updatedestination']);
+    Route::get('all-destinations', [AdminAccountController::class, 'alldestinations']);
 
 });

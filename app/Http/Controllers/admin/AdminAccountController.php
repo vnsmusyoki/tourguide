@@ -63,4 +63,43 @@ class AdminAccountController extends Controller
         Toastr::success('Image has been deleted.', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->back();
     }
+    public function editdestination($destinationid)
+    {
+        $destination = Destination::findOrFail($destinationid);
+        return view('admin.edit-destination', compact('destination'));
+    }
+    public function updatedestination(Request $request, $destinationid)
+    {
+        $this->validate($request, [
+            'destination_name' => 'required|string|exists:destinations',
+            'destination_category' => 'required',
+            'destination_price' => 'required|numeric',
+            'location_address' => 'required|string',
+            'site_description' => 'required|string',
+            'picture' => 'nullable|image| mimes:png,jpeg, jpg|max:10080'
+        ]);
+        $destination = Destination::findOrFail($destinationid);
+        $destination->destination_name  = $request->input('destination_name');
+        $destination->destination_category  = $request->input('destination_category');
+        $destination->destination_price  = $request->input('destination_price');
+        $destination->site_description  = $request->input('site_description');
+        $destination->location_address  = $request->input('location_address');
+        if ($request->hasFile('picture')) {
+            Storage::delete('public/destinations/' . $destination->picture);
+            $fileNameWithExt = $request->picture->getClientOriginalName();
+            $fileName =  pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            $Extension = $request->picture->getClientOriginalExtension();
+            $filenameToStore = $fileName . '-' . time() . '.' . $Extension;
+            $path = $request->picture->storeAs('destinations', $filenameToStore, 'public');
+            $destination->picture = $filenameToStore;
+        }
+
+        $destination->save();
+        Toastr::success('Destination Details updated sucessfully.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect('admin/all-destinations');
+    }
+    public function alldestinations(){
+        $destinations = Destination::all();
+        return view('admin.all-destination', compact('destinations'));
+    }
 }
