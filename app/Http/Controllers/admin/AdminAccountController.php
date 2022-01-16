@@ -19,7 +19,14 @@ class AdminAccountController extends Controller
     {
         return view('admin.create-destination');
     }
-    public function storedestination(Request $request){
-        
+    public function storedestination(Request $request)
+    {
+        $this->validate($request, [
+            'destination_name' => 'required|string|unique:destinations',
+            'destination_category' => 'required',
+            'destination_price' => 'required|numeric',
+            'location_address' => 'required|string',
+            'site_description' => 'required|string',
+        ]);
     }
 }
