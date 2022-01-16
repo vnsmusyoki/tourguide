@@ -13,6 +13,13 @@ class AdminAccountController extends Controller
     }
     public function index()
     {
-        return view('admin.layout');
+        return view('admin.dashboard');
+    }
+    public function createdestination()
+    {
+        return view('admin.create-destination');
+    }
+    public function storedestination(Request $request){
+        
     }
 }
