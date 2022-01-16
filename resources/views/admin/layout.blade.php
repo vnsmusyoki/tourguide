@@ -45,8 +45,17 @@
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/toastr.min.css') }}">
     <!-- END: Custom CSS-->
+    <style>
+        .imgGallery img {
+            padding: 8px;
+            width: 100px;
+            height: 100px;
+        }
 
+    </style>
+     @livewireStyles
 </head>
 <!-- END: Head-->
 
@@ -111,7 +120,8 @@
                             <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                                 <div class="avatar avatar-online"><img
                                         src="{{ asset('backend/app-assets/images/portrait/small/avatar-s-1.png') }}"
-                                        alt="avatar"><i></i></div><span class="user-name">{{ Auth::user()->name}}</span>
+                                        alt="avatar"><i></i></div><span
+                                    class="user-name">{{ Auth::user()->name }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="{{ url('admin/account-security') }}"><i
@@ -153,37 +163,41 @@
                 <li class=" nav-item"><a href=""><i class="feather icon-monitor"></i><span class="menu-title"
                             data-i18n="Templates">Destinations</span></a>
                     <ul class="menu-content">
-                        <li><a class="menu-item" href="{{ url('admin/all-destinations') }}" data-i18n="Vertical">All Destinations</a>  </li>
-                        <li><a class="menu-item" href="{{ url('admin/add-destination') }}" data-i18n="Horizontal">Add New Destination</a> </li>
-                        <li><a class="menu-item" href="{{ url('admin/generate-destination-receipts') }}" data-i18n="Horizontal">Generate Report</a> </li>
+                        <li><a class="menu-item" href="{{ url('admin/all-destinations') }}"
+                                data-i18n="Vertical">All Destinations</a> </li>
+                        <li><a class="menu-item" href="{{ url('admin/add-destination') }}"
+                                data-i18n="Horizontal">Add New Destination</a> </li>
+                        <li><a class="menu-item" href="{{ url('admin/generate-destination-receipts') }}"
+                                data-i18n="Horizontal">Generate Report</a> </li>
                     </ul>
                 </li>
                 <li class=" nav-item"><a href="#"><i class="feather icon-layout"></i><span class="menu-title"
                             data-i18n="Layouts">Accomodations</span></a>
                     <ul class="menu-content">
-                        <li><a class="menu-item" href="{{ url('admin/all-accomodations') }}" data-i18n="Page Layouts">All Accomodations</a>  </li>
-                        <li><a class="menu-item" href="{{ url('admin/add-accomodation') }}" data-i18n="Navbars">Add New</a> </li>
-                        <li><a class="menu-item" href="{{ url('admin/generate-accomodation-reports') }}" data-i18n="Vertical Nav">Generate Reports</a> </li>
+                        <li><a class="menu-item" href="{{ url('admin/all-accomodations') }}"
+                                data-i18n="Page Layouts">All Accomodations</a> </li>
+                        <li><a class="menu-item" href="{{ url('admin/add-accomodation') }}"
+                                data-i18n="Navbars">Add New</a> </li>
+                        <li><a class="menu-item" href="{{ url('admin/generate-accomodation-reports') }}"
+                                data-i18n="Vertical Nav">Generate Reports</a> </li>
                     </ul>
                 </li>
                 <li class=" nav-item"><a href="#"><i class="feather icon-zap"></i><span class="menu-title"
                             data-i18n="Starter kit">Tourists</span><span
                             class="badge badge badge-danger badge-pill float-right mr-2"></span></a>
                     <ul class="menu-content">
-                        <li><a class="menu-item"
-                                href="{{ url('admin/all-tourists')}}"
-                                data-i18n="1 column">All Tourists</a>
+                        <li><a class="menu-item" href="{{ url('admin/all-tourists') }}" data-i18n="1 column">All
+                                Tourists</a>
                         </li>
-                        <li><a class="menu-item"
-                                href="{{ url('admin/generate-tourists-report') }}"
+                        <li><a class="menu-item" href="{{ url('admin/generate-tourists-report') }}"
                                 data-i18n="2 columns">Generate Report</a>
                         </li>
 
                     </ul>
                 </li>
 
-                <li class=" nav-item"><a href=""><i class="feather icon-mail"></i><span
-                            class="menu-title" data-i18n="Email Application">All Tour Plans</span></a>
+                <li class=" nav-item"><a href=""><i class="feather icon-mail"></i><span class="menu-title"
+                            data-i18n="Email Application">All Tour Plans</span></a>
                 </li>
                 <li class=" nav-item"><a href=""><i class="feather icon-message-square"></i><span
                             class="menu-title" data-i18n="Chat Application">All Payments</span></a>
@@ -191,11 +205,11 @@
                 <li class=" nav-item"><a href=""><i class="feather icon-check-square"></i><span
                             class="menu-title" data-i18n="Todo Application">Pending Payments</span></a>
                 </li>
-                <li class=" nav-item"><a href=""><i class="feather icon-file-plus"></i><span
-                            class="menu-title" data-i18n="Kanban Application">Add Admin</span></a>
+                <li class=" nav-item"><a href=""><i class="feather icon-file-plus"></i><span class="menu-title"
+                            data-i18n="Kanban Application">Add Admin</span></a>
                 </li>
-                <li class=" nav-item"><a href=""><i class="feather icon-users"></i><span
-                            class="menu-title" data-i18n="Contacts">Account Security</span></a>
+                <li class=" nav-item"><a href=""><i class="feather icon-users"></i><span class="menu-title"
+                            data-i18n="Contacts">Account Security</span></a>
                 </li>
                 <li class=" nav-item"><a href=""><i class="feather icon-airplay"></i><span
                             class="menu-title" data-i18n="Project Summary">Update Password</span></a>
@@ -224,7 +238,7 @@
             <div class="content-header row">
             </div>
             <div class="content-body">
-               @yield('content')
+                @yield('content')
             </div>
         </div>
     </div>
@@ -232,8 +246,8 @@
     <footer class="footer footer-static footer-light navbar-border">
         <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span
                 class="float-md-left d-block d-md-inline-block">Copyright &copy; 2022 <a
-                    class="text-bold-800 grey darken-2" href=""
-                    target="_blank">TourGuide </a></span><span class="float-md-right d-none d-lg-block">Hand-crafted &
+                    class="text-bold-800 grey darken-2" href="" target="_blank">TourGuide </a></span><span
+                class="float-md-right d-none d-lg-block">Hand-crafted &
                 Made with <i class="feather icon-heart pink"></i></span></p>
     </footer>
     <!-- END: Footer-->
@@ -259,7 +273,10 @@
     <!-- BEGIN: Page JS-->
     <script src="{{ asset('backend/app-assets/js/scripts/pages/dashboard-ecommerce.min.js') }}"></script>
     <!-- END: Page JS-->
-
+    <script src="{{ asset('backend/jquery.min.js') }}"></script>
+    <script src="{{ asset('backend/toastr.min.js') }}"></script>
+    {!! Toastr::message() !!}
+    @livewireScripts
 </body>
 <!-- END: Body-->
 

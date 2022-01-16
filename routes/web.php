@@ -29,5 +29,8 @@ Route::get('/contact-us', [PagesController::class, 'contactus']);
 Route::get('/admin/dashboard', [AdminAccountController::class, 'index'])->name('admin');
 Route::prefix('admin')->group(function(){
     Route::get('add-destination', [AdminAccountController::class, 'createdestination']);
-    Route::get('store-destination', [AdminAccountController::class, 'storedestination']);
+    Route::post('store-destination', [AdminAccountController::class, 'storedestination']);
+    Route::get('destination-images/{destinationid}', [AdminAccountController::class, 'destinationimages']);
+    Route::get('delete-image/{image}', [AdminAccountController::class, 'deleteimage']);
+
 });

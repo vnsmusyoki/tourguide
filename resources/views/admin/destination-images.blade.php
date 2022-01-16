@@ -1,8 +1,9 @@
 @extends('admin.layout')
 @section('title', 'Upload New Destination')
 @section('content')
+   @livewire('admin.upload-images',['destinationid'=>$destination->id])
     <div class="row match-height">
-        <div class="col-xl-12 col-lg-12">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Upload New Destination</h4>
