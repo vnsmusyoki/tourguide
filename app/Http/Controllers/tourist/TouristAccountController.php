@@ -7,6 +7,7 @@ use App\Models\Accomodation;
 use App\Models\BookAccomodation;
 use App\Models\Destination;
 use App\Models\Tourist;
+use App\Models\TourPackage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
@@ -114,5 +115,38 @@ class TouristAccountController extends Controller
             Toastr::success('Accomodation Boking successful.Wait for your payments to be verified', 'Success', ["positionClass" => "toast-top-right"]);
             return redirect('tourist/all-accomodation-bookings');
         }
+    }
+    public function allpackages()
+    {
+        $packages = TourPackage::all();
+        return view('tourists.all-packages', compact('packages'));
+    }
+    public function selectonedestinations()
+    {
+        $destinations = Destination::all();
+        return view('tourists.select-one-destination', compact('destinations'));
+    }
+    public function selectaccomodation($destinationid)
+    {
+        $destination = Destination::findOrFail($destinationid);
+        $accomodations = Accomodation::where('destination_id', $destinationid)->get();
+        return view('tourists.select-two-accomodation', compact('destinationid', 'accomodations', 'destination'));
+    }
+    public function calculatecost(Request $request, $accomodationid)
+    {
+      
+        $days = $request->input('days_spent');
+        $driverneeded = $request->input('driver_needed');
+        $destinationname = $request->input('destination_name');
+
+        return redirect('tourist/planned-trip-payment/' . $destinationname . '/' . $accomodationid . '/' . $days . '/' . $driverneeded);
+    }
+    public function showpayments($destination, $accomodation, $days, $driver)
+    {
+        $accomodationcheck =Accomodation::findOrFail($accomodation);
+        $accprice = $accomodationcheck->price_per_night;
+        $totalprice = $days * $accprice;
+
+        return view('tourists.plan-trip-payment', compact(['destination', 'accomodationcheck', 'days', 'driver', 'totalprice']));
     }
 }
