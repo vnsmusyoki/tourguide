@@ -5,7 +5,7 @@
         <div class="col-xl-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">All Destinations</h4>
+                    <h4 class="card-title">All Accomodations</h4>
                     <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
                     <div class="heading-elements">
 
@@ -20,9 +20,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Image</th>
-                                    <th>Destination</th>
-                                    <th>Category</th>
-                                    <th>Price</th>
+                                    <th>Accomodation</th>
+                                    <th>Nearest Park</th>
+                                    <th>Price Per Night</th>
                                     <th>Description</th>
                                     <th>Update</th>
                                     <th>Delete</th>
@@ -37,10 +37,10 @@
                                                     alt="" style="height:60px;width:120px;"></a></td>
                                         <td class="text-truncate">{{ $accomodation->accomodation_name }}</td>
                                         <td class="text-truncate"><span
-                                                class="badge badge-success">{{ $accomodation->accomodation_category }}</span>
+                                                class="badge badge-success">{{ $accomodation->accdestination->destination_name }}</span>
                                         </td>
-                                        <td class="text-truncate">Kshs. {{ $accomodation->accomodation_price }}</td>
-                                        <td class="text-truncate">{{ $accomodation->location_address }}</td>
+                                        <td class="text-truncate">Kshs. {{ $accomodation->price_per_night }}</td>
+                                        <td class="text-truncate">{{ $accomodation->description }}</td>
                                         <td class="text-truncate"><a
                                                 href="{{ url('admin/edit-accomodation/' . $accomodation->id) }}">Edit</a>
                                         </td>

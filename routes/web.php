@@ -38,4 +38,8 @@ Route::prefix('admin')->group(function () {
     Route::get('delete-destination/{destinationid}', [AdminAccountController::class, 'deletedestination']);
     Route::get('add-accomodation', [AdminAccountController::class, 'creteaccomodation']);
     Route::post('store-accomodation', [AdminAccountController::class, 'storeaccomodation']);
+    Route::get('all-accomodations', [AdminAccountController::class, 'allaccomodations']);
+    Route::get('edit-accomodation/{accid}', [AdminAccountController::class, 'editaccomodation']);
+    Route::patch('update-accomodation/{accid}', [AdminAccountController::class, 'updateaccomodation']);
+    Route::get('delete-accomodation/{accid}', [AdminAccountController::class, 'deleteaccomodation']);
 });

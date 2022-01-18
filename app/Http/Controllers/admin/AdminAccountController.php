@@ -120,7 +120,7 @@ class AdminAccountController extends Controller
     public function storeaccomodation(Request $request)
     {
         $this->validate($request, [
-            'accomodation_name' => 'required|string|exists:destinations',
+            'accomodation_name' => 'required|string',
             'destination_name' => 'required',
             'accomodation_price' => 'required|numeric',
             'site_description' => 'required|string',
@@ -145,5 +145,52 @@ class AdminAccountController extends Controller
     {
         $accomodations = Accomodation::all();
         return view('admin.all-accomodations', compact('accomodations'));
+    }
+    public function editaccomodation($accid)
+    {
+        $accomodation = Accomodation::findOrFail($accid);
+        $destinations = Destination::all();
+        return view('admin.edit-accomodation', compact('accomodation', 'destinations'));
+    }
+    public function updateaccomodation(Request $request, $accid)
+    {
+        $this->validate($request, [
+            'accomodation_name' => 'required|string',
+            'destination_name' => 'required',
+            'accomodation_price' => 'required|numeric',
+            'site_description' => 'required|string',
+            'picture' => 'nullable|image| mimes:png,jpeg, jpg|max:10080'
+        ]);
+
+        $destination = Accomodation::findOrFail($accid);
+        $destination->destination_id  = $request->input('destination_name');
+        $destination->accomodation_name  = $request->input('accomodation_name');
+        $destination->description  = $request->input('site_description');
+        $destination->price_per_night  = $request->input('accomodation_price');
+        if ($request->input('picture')) {
+            Storage::delete('public/accomodation/' . $destination->picture);
+            $fileNameWithExt = $request->picture->getClientOriginalName();
+            $fileName =  pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            $Extension = $request->picture->getClientOriginalExtension();
+            $filenameToStore = $fileName . '-' . time() . '.' . $Extension;
+            $path = $request->picture->storeAs('accomodations', $filenameToStore, 'public');
+            $destination->picture = $filenameToStore;
+        }
+
+        $destination->save();
+        Toastr::success('Accomodation Details uploaded sucessfully.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect('admin/all-accomodations');
+    }
+    public function deleteaccomodation($accid)
+    {
+        $destination = Accomodation::findOrFail($accid);
+        Storage::delete('public/accomodations/' . $destination->picture);
+        $destination->delete();
+        Toastr::error('Accomodation Details deleted sucessfully.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect('admin/all-accomodations');
+    }
+    public function alltourists(){
+        $tourists = 
+        return view('admin.all-tourists', compact('alltourists'));
     }
 }
