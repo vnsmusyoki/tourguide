@@ -26,6 +26,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/', [PagesController::class, 'index']);
 Route::get('/about-us', [PagesController::class, 'aboutus']);
 Route::get('/contact-us', [PagesController::class, 'contactus']);
+Route::post('/create-new-account', [PagesController::class, 'createaccount']);
 Route::get('/admin/dashboard', [AdminAccountController::class, 'index'])->name('admin');
 Route::prefix('admin')->group(function () {
     Route::get('add-destination', [AdminAccountController::class, 'createdestination']);

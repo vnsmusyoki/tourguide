@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Accomodation;
 use App\Models\Destination;
 use App\Models\DestinationImage;
+use App\Models\Tourist;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Storage;
@@ -189,8 +190,9 @@ class AdminAccountController extends Controller
         Toastr::error('Accomodation Details deleted sucessfully.', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect('admin/all-accomodations');
     }
-    public function alltourists(){
-        $tourists = 
+    public function alltourists()
+    {
+        $tourists = Tourist::all();
         return view('admin.all-tourists', compact('alltourists'));
     }
 }

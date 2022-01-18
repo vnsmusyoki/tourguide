@@ -45,7 +45,13 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/style.css') }}">
     <!-- END: Custom CSS-->
+    <style>
+        html,
+        body {
+            overflow-x: hidden !important;
+        }
 
+    </style>
 </head>
 <!-- END: Head-->
 
@@ -65,7 +71,7 @@
                                 <div class="card-title text-center">
                                     <div class="p-1">
                                         <a href="{{ url('/') }}"><img
-                                                src="{{ asset('backend/app-assets/images/logo/stack-logo-dark.png') }}"
+                                                src="{{ asset('frontend/images/resources/logo-1.png') }}"
                                                 alt="Homepage logo"></a>
                                     </div>
                                 </div>
@@ -86,6 +92,7 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </fieldset>
+                                        <br>
                                         <fieldset class="form-group position-relative has-icon-left">
                                             <input type="password" class="form-control form-control-lg"
                                                 id="user-password" placeholder="Enter Password" name="password">
@@ -110,10 +117,10 @@
                             </div>
                             <div class="card-footer">
                                 <div class="">
-                                    <p class="float-sm-left text-center m-0"><a href="" class="card-link">Recover
-                                            password</a></p>
-                                    <p class="float-sm-right text-center m-0">New to Tours Management? <a href=""
-                                            class="card-link">Sign Up</a></p>
+                                    <p class="float-sm-left text-center m-0"><a href="{{ url('/') }}"
+                                            class="card-link">Return Home</a></p>
+                                    <p class="float-sm-right text-center m-0">New to Tours Management? <a
+                                            href="{{ route('register') }}" class="card-link">Sign Up</a></p>
                                 </div>
                             </div>
                         </div>
