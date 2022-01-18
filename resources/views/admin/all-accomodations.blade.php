@@ -29,23 +29,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($destinations as $key => $destination)
+                                @foreach ($accomodations as $key => $accomodation)
                                     <tr>
                                         <td class="text-truncate">{{ ++$key }}</td>
                                         <td class="text-truncate"><a href="#"><img
-                                                    src="{{ asset('storage/destinations/' . $destination->picture) }}" alt=""
-                                                    style="height:60px;width:120px;"></a></td>
-                                        <td class="text-truncate">{{  $destination->destination_name }}</td>
-                                        <td class="text-truncate"><span class="badge badge-success">{{ $destination->destination_category }}</span></td>
-                                        <td class="text-truncate">Kshs. {{ $destination->destination_price }}</td>
-                                        <td class="text-truncate">{{ $destination->location_address}}</td>
-                                        <td class="text-truncate"><a href="{{ url('admin/edit-destination/'.$destination->id) }}">Edit</a></td>
-                                        <td class="text-truncate"><a href="{{ url('admin/delete-destination/'.$destination->id) }}">Delete</a></td>
+                                                    src="{{ asset('storage/accomodations/' . $accomodation->picture) }}"
+                                                    alt="" style="height:60px;width:120px;"></a></td>
+                                        <td class="text-truncate">{{ $accomodation->accomodation_name }}</td>
+                                        <td class="text-truncate"><span
+                                                class="badge badge-success">{{ $accomodation->accomodation_category }}</span>
+                                        </td>
+                                        <td class="text-truncate">Kshs. {{ $accomodation->accomodation_price }}</td>
+                                        <td class="text-truncate">{{ $accomodation->location_address }}</td>
+                                        <td class="text-truncate"><a
+                                                href="{{ url('admin/edit-accomodation/' . $accomodation->id) }}">Edit</a>
+                                        </td>
+                                        <td class="text-truncate"><a
+                                                href="{{ url('admin/delete-accomodation/' . $accomodation->id) }}">Delete</a>
+                                        </td>
                                     </tr>
                                 @endforeach
-
-
-
                             </tbody>
                         </table>
                     </div>

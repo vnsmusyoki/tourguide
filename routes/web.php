@@ -27,7 +27,7 @@ Route::get('/', [PagesController::class, 'index']);
 Route::get('/about-us', [PagesController::class, 'aboutus']);
 Route::get('/contact-us', [PagesController::class, 'contactus']);
 Route::get('/admin/dashboard', [AdminAccountController::class, 'index'])->name('admin');
-Route::prefix('admin')->group(function(){
+Route::prefix('admin')->group(function () {
     Route::get('add-destination', [AdminAccountController::class, 'createdestination']);
     Route::post('store-destination', [AdminAccountController::class, 'storedestination']);
     Route::get('destination-images/{destinationid}', [AdminAccountController::class, 'destinationimages']);
@@ -35,5 +35,7 @@ Route::prefix('admin')->group(function(){
     Route::get('edit-destination/{destinationid}', [AdminAccountController::class, 'editdestination']);
     Route::patch('update-destination/{destinationid}', [AdminAccountController::class, 'updatedestination']);
     Route::get('all-destinations', [AdminAccountController::class, 'alldestinations']);
-
+    Route::get('delete-destination/{destinationid}', [AdminAccountController::class, 'deletedestination']);
+    Route::get('add-accomodation', [AdminAccountController::class, 'creteaccomodation']);
+    Route::post('store-accomodation', [AdminAccountController::class, 'storeaccomodation']);
 });
