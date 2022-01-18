@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\AdminAccountController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\tourist\TouristAccountController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,7 @@ Route::get('/about-us', [PagesController::class, 'aboutus']);
 Route::get('/contact-us', [PagesController::class, 'contactus']);
 Route::post('/create-new-account', [PagesController::class, 'createaccount']);
 Route::get('/admin/dashboard', [AdminAccountController::class, 'index'])->name('admin');
+Route::get('/tourist/dashboard', [TouristAccountController::class, 'index'])->name('tourist');
 Route::prefix('admin')->group(function () {
     Route::get('add-destination', [AdminAccountController::class, 'createdestination']);
     Route::post('store-destination', [AdminAccountController::class, 'storedestination']);
@@ -43,4 +45,8 @@ Route::prefix('admin')->group(function () {
     Route::get('edit-accomodation/{accid}', [AdminAccountController::class, 'editaccomodation']);
     Route::patch('update-accomodation/{accid}', [AdminAccountController::class, 'updateaccomodation']);
     Route::get('delete-accomodation/{accid}', [AdminAccountController::class, 'deleteaccomodation']);
+});
+Route::prefix('tourist')->group(function () {
+    Route::get('complete-account', [TouristAccountController::class, 'completeprofile']);
+    Route::post('finish-account', [TouristAccountController::class, 'finishaccount']);
 });
