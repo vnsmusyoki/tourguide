@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\tourist;
 
 use App\Http\Controllers\Controller;
+use App\Models\Accomodation;
+use App\Models\BookAccomodation;
+use App\Models\Destination;
 use App\Models\Tourist;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -54,5 +57,62 @@ class TouristAccountController extends Controller
 
         Toastr::success('Account setup is now complete', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect('tourist/dashboard');
+    }
+    public function alldestinations()
+    {
+        $destinations = Destination::all();
+        return view('tourists.all-destinations', compact('destinations'));
+    }
+    public function allaccomodations()
+    {
+        $accomodations = Accomodation::all();
+        return view('tourists.all-accomodations', compact('accomodations'));
+    }
+    public function bookaccomodation($bookid)
+    {
+        $checkbboking = BookAccomodation::where(['user_id' => auth()->user()->id, 'status' => 'active', 'accomodation_id' => $bookid])->orWhere(['user_id' => auth()->user()->id, 'status' => 'waiting', 'accomodation_id' => $bookid])->get();
+
+        if ($checkbboking->count() >= 1) {
+            return redirect('tourist/all-accomodation-bookings');
+        } else {
+            $recordnew = new BookAccomodation;
+        }
+    }
+    public function bookingaccomodation(Request $request, $bookid)
+    {
+
+        $accomodation = Accomodation::findOrFail($bookid);
+        $days = $request->input('days_spent');
+        $totalprice = $days * $accomodation->price_per_night;
+        return view('tourists.accomodation-booking-payment', compact(['accomodation', 'totalprice', 'days']));
+    }
+    public function accomodationbookings()
+    {
+        $bookings = BookAccomodation::where('user_id', auth()->user()->id)->get();
+        return view('tourists.all-accomodation-bookings', compact('bookings'));
+    }
+    public function uploadaccomodationpayments(Request $request, $bookid)
+    {
+        $this->validate($request, [
+            'transaction_code' => 'required|string|min:10|max:10|unique:book_accomodations',
+        ]);
+
+        $checkbboking = BookAccomodation::where(['user_id' => auth()->user()->id, 'status' => 'active', 'accomodation_id' => $bookid])->orWhere(['user_id' => auth()->user()->id, 'status' => 'waiting', 'accomodation_id' => $bookid])->get();
+
+        if ($checkbboking->count() >= 1) {
+            Toastr::error('You have already placed this booking', 'Success', ["positionClass" => "toast-top-right"]);
+            return redirect('tourist/all-accomodation-bookings');
+        } else {
+            $recordnew = new BookAccomodation;
+            $recordnew->user_id = auth()->user()->id;
+            $recordnew->accomodation_id = $bookid;
+            $recordnew->transaction_code = $request->input('transaction_code');
+            $recordnew->total_days = $request->input('days');
+            $recordnew->amount_paid = $request->input('amount_paid');
+            $recordnew->status = "pending";
+            $recordnew->save();
+            Toastr::success('Accomodation Boking successful.Wait for your payments to be verified', 'Success', ["positionClass" => "toast-top-right"]);
+            return redirect('tourist/all-accomodation-bookings');
+        }
     }
 }

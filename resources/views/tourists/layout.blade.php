@@ -54,6 +54,19 @@
             height: 100px;
         }
 
+        .cardcheck::-webkit-scrollbar {
+            width: .3em;
+        }
+
+        .cardcheck::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 3px rgba(22, 211, 154, 0.3);
+        }
+
+        .cardcheck::-webkit-scrollbar-thumb {
+            background-color: rgb(22, 211, 154);
+            outline: 1px solid #c7ddd7;
+        }
+
     </style>
     @livewireStyles
 </head>
@@ -174,8 +187,6 @@
                                 data-i18n="Page Layouts">All Accomodations</a> </li>
                     </ul>
                 </li>
-
-
                 <li class=" nav-item"><a href="{{ url('tourist/all-packages') }}"><i
                             class="feather icon-mail"></i><span class="menu-title" data-i18n="Email Application">All
                             Packages</span></a>

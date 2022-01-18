@@ -49,4 +49,11 @@ Route::prefix('admin')->group(function () {
 Route::prefix('tourist')->group(function () {
     Route::get('complete-account', [TouristAccountController::class, 'completeprofile']);
     Route::post('finish-account', [TouristAccountController::class, 'finishaccount']);
+    Route::get('all-destinations', [TouristAccountController::class, 'alldestinations']);
+    Route::get('all-accomodations', [TouristAccountController::class, 'allaccomodations']);
+    Route::get('all-accomodation-bookings', [TouristAccountController::class, 'accomodationbookings']);
+    Route::get('book-accomodation/{bookid}', [TouristAccountController::class, 'bookaccomodation']);
+    Route::post('book-accomodation-days/{bookid}', [TouristAccountController::class, 'bookingaccomodation']);
+    Route::post('upload-accomodation-payments/{bookid}', [TouristAccountController::class, 'uploadaccomodationpayments']);
 });
+
