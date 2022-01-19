@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Accomodation;
 use App\Models\BookAccomodation;
 use App\Models\Destination;
+use App\Models\PackageBooking;
 use App\Models\Tourist;
 use App\Models\TouristTripPlan;
 use App\Models\TourPackage;
@@ -199,5 +200,25 @@ class TouristAccountController extends Controller
     public function packagesbooking()
     {
         // $plans =
+    }
+    public function bookpackage(Request $request)
+    {
+        $this->validate($request, [
+            'transaction_code' => 'required|string|min:10|max:10|unique:package_bookings',
+        ]);
+
+        $destination = $request->input('destinationid');
+        $accomodation = $request->input('accomodationid');
+        $package = $request->input('packageid');
+        $trip = new PackageBooking;
+        $trip->user_id = auth()->user()->id;
+        $trip->accomodation_id = $accomodation;
+        $trip->destination_id = $destination;
+        $trip->package_id = $package;
+        $trip->status = "pending";
+        $trip->transaction_code = $request->input('transaction_code');
+        $trip->save();
+        Toastr::success('Your package booking has been uploaded. ', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect('tourist/dashboard');
     }
 }

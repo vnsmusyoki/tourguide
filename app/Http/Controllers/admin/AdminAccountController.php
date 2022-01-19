@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Accomodation;
 use App\Models\Destination;
 use App\Models\DestinationImage;
+use App\Models\PackageBooking;
 use App\Models\Tourist;
 use App\Models\TouristTripPlan;
 use App\Models\TourPackage;
@@ -307,7 +308,34 @@ class AdminAccountController extends Controller
     }
     public function allpayments()
     {
-        $trippayments = TouristTripPlan::where('status', 'pending')->get();
-        return view('admin.all-payments', compact('trippayments'));
+        $trippayments = TouristTripPlan::where('status', 'confirmed')->get();
+        $bookings = PackageBooking::where('status', 'confirmed')->get();
+        return view('admin.all-payments', compact('trippayments', 'bookings'));
+    }
+    public function allpendingpackagebookings()
+    {
+        $bookings = PackageBooking::where('status', 'pending')->get();
+        return view('admin.all-pending-package-bookings', compact('bookings'));
+    }
+    public function allpackagebookings()
+    {
+        $bookings = PackageBooking::all();
+        return view('admin.all-package-bookings', compact('bookings'));
+    }
+    public function acceptpackagebooking($packageid)
+    {
+        $booking = PackageBooking::findOrFail($packageid);
+        $booking->status="confirmed";
+        $booking->save();
+        Toastr::success('Package booking confirmed sucessfully.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
+    }
+    public function rejectpackagebooking($packageid)
+    {
+        $booking = PackageBooking::findOrFail($packageid);
+        $booking->status="denied";
+        $booking->save();
+        Toastr::error('Package booking rejected sucessfully.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
     }
 }

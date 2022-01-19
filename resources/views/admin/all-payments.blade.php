@@ -5,7 +5,7 @@
         <div class="col-xl-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">All Planned Trips  Payments</h4>
+                    <h4 class="card-title">All Planned Trips Payments</h4>
                     <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
                     <div class="heading-elements">
 
@@ -71,11 +71,12 @@
         </div>
 
     </div>
+
     <div class="row match-height">
         <div class="col-xl-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">All Packages Payments</h4>
+                    <h4 class="card-title">All Package Bookings</h4>
                     <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
                     <div class="heading-elements">
 
@@ -85,54 +86,42 @@
                     <div class="card-body">
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered display">
+                        <table id="recent-orders" class="table table-hover mb-0 ps-container ps-theme-default">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Picture</th>
-                                    <th>Tourist</th>
-                                    <th>Destination</th>
+                                    <th>Image</th>
+                                    <th>Package Name</th>
+                                    <th>Booked By</th>
+                                    <th>Price</th>
                                     <th>Accomodation</th>
-                                    <th>Days</th>
-                                    <th>Driver Fee</th>
-                                    <th>Transaction Code</th>
-                                    <th>Amount Paid</th>
+                                    <th>Destination</th>
+                                    <th>transaction Code</th>
                                     <th>Status</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($trippayments->count() >= 1)
-                                    @foreach ($trippayments as $key => $plan)
-                                        <tr>
-                                            <td>{{ ++$key }}</td>
-                                            <td class="text-truncate"><a href="#">
-                                                    @if ($plan->planuser->picture == null)
-                                                        <img src="{{ asset('backend/app-assets/images/portrait/small/avatar-s-1.png') }}"
-                                                            alt="" style="height:60px;width:60px;border-radius:50%;">
-                                                </a>
-                                            @else
-                                                <img src="{{ asset('storage/profiles/' . $plan->planuser->picture) }}"
-                                                    alt="" style="height:60px;width:120px;"></a>
-                                    @endif
-                                    </td>
-                                    <td>{{ $plan->planuser->name }}</td>
-                                    <td>{{ $plan->plandestination->destination_name }}</td>
-                                    <td>{{ $plan->planaccomodation->accomodation_name }}</td>
-                                    <td>{{ $plan->total_days }}</td>
-                                    <td>{{ $plan->driver_fee }}</td>
-                                    <td>{{ $plan->transaction_code }}</td>
-                                    <td>{{ $plan->amount_paid }}</td>
-                                    <td>{{ $plan->status }}</td>
-                                    <td><a href="{{ url('admin/accept-plan-trip/' . $plan->id) }}"
-                                            class="badge badge-success">Confirm</a>/
-                                        <a href="{{ url('admin/reject-plan-trip/' . $plan->id) }}"
-                                            class="badge badge-danger">Reject</a>
-                                    </td>
+                                @foreach ($bookings as $key => $booking)
+                                    <tr>
+                                        <td class="text-truncate">{{ ++$key }}</td>
+                                        <td class="text-truncate"><a href="#"><img
+                                                    src="{{ asset('storage/packages/' . $booking->bookingpackage->picture) }}"
+                                                    alt="" style="height:60px;width:120px;"></a></td>
+                                        <td class="text-truncate">{{ $booking->bookingpackage->package_name }}</td>
+                                        <td class="text-truncate"><span
+                                                class="badge badge-success">{{ $booking->bookinguser->name }}</span>
+                                        </td>
+                                        <td class="text-truncate">Kshs. {{ $booking->bookingpackage->amount_paid }}</td>
+                                        <td class="text-truncate">{{ $booking->bookingacc->accomodation_name }}</td>
+                                        <td class="text-truncate">{{ $booking->bookingdest->destination_name }}</td>
+                                        <td class="text-truncate">{{ $booking->transaction_code }}</td>
+                                        <td class="text-truncate">{{ $booking->status }}</td>
+
                                     </tr>
                                 @endforeach
-                            @else
-                                @endif
+
+
+
                             </tbody>
                         </table>
                     </div>
@@ -141,5 +130,4 @@
         </div>
 
     </div>
-
 @endsection

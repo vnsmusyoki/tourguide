@@ -189,6 +189,12 @@
                         <li><a class="menu-item" href="{{ url('admin/create-package') }}" data-i18n="1 column">
                                 Create New Package</a>
                         </li>
+                        <li><a class="menu-item" href="{{ url('admin/all-pending-package-bookings') }}"
+                                data-i18n="2 columns">Pending Package Bookings</a>
+                        </li>
+                        <li><a class="menu-item" href="{{ url('admin/all-packages') }}"
+                                data-i18n="2 columns">All Packages</a>
+                        </li>
                         <li><a class="menu-item" href="{{ url('admin/generate-tourists-report') }}"
                                 data-i18n="2 columns">Generate Report</a>
                         </li>
@@ -215,27 +221,18 @@
                 <li class=" nav-item"><a href="{{ url('admin/all-payments') }}"><i class="feather icon-message-square"></i><span
                             class="menu-title" data-i18n="Chat Application">All Payments</span></a>
                 </li>
-                <li class=" nav-item"><a href=""><i class="feather icon-check-square"></i><span
-                            class="menu-title" data-i18n="Todo Application">Pending Payments</span></a>
-                </li>
-                <li class=" nav-item"><a href=""><i class="feather icon-file-plus"></i><span class="menu-title"
-                            data-i18n="Kanban Application">Add Admin</span></a>
-                </li>
-                <li class=" nav-item"><a href=""><i class="feather icon-users"></i><span class="menu-title"
+
+                <li class=" nav-item"><a href="{{ url('admin/account-security') }}"><i class="feather icon-users"></i><span class="menu-title"
                             data-i18n="Contacts">Account Security</span></a>
                 </li>
                 <li class=" nav-item"><a href=""><i class="feather icon-airplay"></i><span
                             class="menu-title" data-i18n="Project Summary">Update Password</span></a>
                 </li>
-
-
                 <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title"
                             data-i18n="Users">Manage Admins</span></a>
-
                 </li>
                 <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title"
                             data-i18n="Users">Logout</span></a>
-
                 </li>
 
 

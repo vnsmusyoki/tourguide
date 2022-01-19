@@ -49,12 +49,19 @@ Route::prefix('admin')->group(function () {
     Route::get('all-tour-plans', [AdminAccountController::class, 'alltourplans']);
     Route::get('accept-plan-trip/{tripid}', [AdminAccountController::class, 'acceptplantrip']);
     Route::get('reject-plan-trip/{tripid}', [AdminAccountController::class, 'rejectplantrip']);
+    Route::get('accept-package-booking/{packageid}', [AdminAccountController::class, 'acceptpackagebooking']);
+    Route::get('reject-package-booking/{packageid}', [AdminAccountController::class, 'rejectpackagebooking']);
     Route::get('all-payments', [AdminAccountController::class, 'allpayments']);
     Route::get('create-package', [AdminAccountController::class, 'createpackage']);
     Route::post('store-package', [AdminAccountController::class, 'storepackage']);
     Route::get('all-packages', [AdminAccountController::class, 'allpackages']);
+    Route::get('all-pending-package-bookings', [AdminAccountController::class, 'allpendingpackagebookings']);
+    Route::get('all-package-bookings', [AdminAccountController::class, 'allpackagebookings']);
     Route::get('edit-tour-package/{packageid}', [AdminAccountController::class, 'edittourpackage']);
     Route::patch('update-package/{packageid}', [AdminAccountController::class, 'updatetourpackage']);
+    Route::post('update-password', [AdminController::class, 'updatepassword']);
+    Route::post('update-email', [AdminController::class, 'updateemail']);
+    Route::post('update-avatar', [AdminController::class, 'updateavatar']);
 });
 Route::prefix('tourist')->group(function () {
     Route::get('complete-account', [TouristAccountController::class, 'completeprofile']);
@@ -74,4 +81,5 @@ Route::prefix('tourist')->group(function () {
     Route::get('all-personal-plans', [TouristAccountController::class, 'personalplans']);
     Route::get('delete-plan-trip', [TouristAccountController::class, 'deleteplan']);
     Route::get('all-packages-booking-history', [TouristAccountController::class, 'packagesbooking']);
+    Route::post('book-package-trip', [TouristAccountController::class, 'bookpackage']);
 });

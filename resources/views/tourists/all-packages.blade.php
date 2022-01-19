@@ -22,26 +22,51 @@
                         <div class="card-header">
                             <h5 class="card-title">{{ $package->package_name }}</h5>
                             <hr>
-                            <img src="{{ asset('storage/packages/' . $package->picture) }}" class="img-fluid"
-                                alt="">
+                            <img src="{{ asset('storage/packages/' . $package->picture) }}" class="img-fluid" alt="">
                             <br>
                             <strong>
                                 <h6>Entrance Fee</h6>
                             </strong>
-                            <p><i>Kshs. {{ $package->package_price }}</i></p>
+                            <p><i>Kshs. {{ $package->amount_paid }}</i></p>
                             <br>
                             <strong>
-                                <h6>Location</h6>
+                                <h6>Destination</h6>
                             </strong>
-                            <p><i> {{ $package->location_address }}</i></p>
+                            <p><i> {{ $package->tourpackagedest->destination_name }}</i></p>
+                            <br>
+                            <strong>
+                                <h6>Accomodation</h6>
+                            </strong>
+                            <p><i> {{ $package->tourpackageacc->accomodation_name }}</i></p>
+                            <br>
+                            <strong>
+                                <h6>Duration</h6>
+                            </strong>
+                            <p><i> {{ $package->duration }}</i></p>
                             <br>
                             <strong>
                                 <h6>What To See</h6>
                             </strong>
-                            <p><i>{{ $package->site_description }}</i></p>
+                            <p><i>{{ $package->description }}</i></p>
                             <br>
-                            <a href="{{ url('tourist/accomodations-around/' . $destination->id) }}"
-                                class="btn btn-block btn-danger">See Accomodations Around</a>
+                            <hr>
+                            <form action="{{ url('tourist/book-package-trip') }}" method="POST">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="">Transaction Code</label>
+                                    <input type="text" name="transaction_code" class="form-control" required>
+                                    @error('transaction_code')
+                                        <span class="text-danger">{{ $transaction_de }}</span>
+                                    @enderror
+                                </div>
+                                <input type="hidden" name="destinationid"
+                                    value="{{ $package->destination_id }}">
+                                <input type="hidden" name="accomodationid"
+                                    value="{{ $package->accomodation_id }}">
+                                <input type="hidden" name="packageid" value="{{ $package->id }}">
+                                <button class="btn btn-block btn-success" type="submit">Book Package Now</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
