@@ -134,7 +134,7 @@ class TouristAccountController extends Controller
     }
     public function calculatecost(Request $request, $accomodationid)
     {
-      
+
         $days = $request->input('days_spent');
         $driverneeded = $request->input('driver_needed');
         $destinationname = $request->input('destination_name');
@@ -143,10 +143,20 @@ class TouristAccountController extends Controller
     }
     public function showpayments($destination, $accomodation, $days, $driver)
     {
-        $accomodationcheck =Accomodation::findOrFail($accomodation);
+        $destinationcheck = Destination::findOrFail($destination);
+        $accomodationcheck = Accomodation::findOrFail($accomodation);
         $accprice = $accomodationcheck->price_per_night;
         $totalprice = $days * $accprice;
+        $totaldriver = $days * 500;
+        $totalfee = $totaldriver + $totalprice;
+        $totalpayment = ($destinationcheck->destination_price) + $totalfee;
 
-        return view('tourists.plan-trip-payment', compact(['destination', 'accomodationcheck', 'days', 'driver', 'totalprice']));
+        return view('tourists.plan-trip-payment', compact(['destination', 'accomodationcheck', 'destinationcheck', 'days', 'driver', 'totalprice', 'totaldriver', 'totalfee', 'totalpayment']));
+    }
+    public function totalplancost(Request $request, $booking)
+    {
+        $this->validate($request, [
+            'transaction_code' => 'required|string|min:10|max:10|unique:tourist_trip_plans',
+        ]);
     }
 }

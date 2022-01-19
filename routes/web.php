@@ -60,5 +60,6 @@ Route::prefix('tourist')->group(function () {
     Route::get('select-accomodation/{destinationid}', [TouristAccountController::class, 'selectaccomodation']);
     Route::post('book-selected-accomodation-days/{accomodationid}', [TouristAccountController::class, 'calculatecost']);
     Route::get('planned-trip-payment/{destination}/{accomodation}/{days}/{driver}', [TouristAccountController::class, 'showpayments']);
+    Route::post('upload-totalbookingpayment/{booking}', [TouristAccountController::class, 'totalplancost']);
 });
 
