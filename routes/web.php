@@ -45,6 +45,16 @@ Route::prefix('admin')->group(function () {
     Route::get('edit-accomodation/{accid}', [AdminAccountController::class, 'editaccomodation']);
     Route::patch('update-accomodation/{accid}', [AdminAccountController::class, 'updateaccomodation']);
     Route::get('delete-accomodation/{accid}', [AdminAccountController::class, 'deleteaccomodation']);
+    Route::get('all-tourists', [AdminAccountController::class, 'alltourists']);
+    Route::get('all-tour-plans', [AdminAccountController::class, 'alltourplans']);
+    Route::get('accept-plan-trip/{tripid}', [AdminAccountController::class, 'acceptplantrip']);
+    Route::get('reject-plan-trip/{tripid}', [AdminAccountController::class, 'rejectplantrip']);
+    Route::get('all-payments', [AdminAccountController::class, 'allpayments']);
+    Route::get('create-package', [AdminAccountController::class, 'createpackage']);
+    Route::post('store-package', [AdminAccountController::class, 'storepackage']);
+    Route::get('all-packages', [AdminAccountController::class, 'allpackages']);
+    Route::get('edit-tour-package/{packageid}', [AdminAccountController::class, 'edittourpackage']);
+    Route::patch('update-package/{packageid}', [AdminAccountController::class, 'updatetourpackage']);
 });
 Route::prefix('tourist')->group(function () {
     Route::get('complete-account', [TouristAccountController::class, 'completeprofile']);
@@ -61,5 +71,7 @@ Route::prefix('tourist')->group(function () {
     Route::post('book-selected-accomodation-days/{accomodationid}', [TouristAccountController::class, 'calculatecost']);
     Route::get('planned-trip-payment/{destination}/{accomodation}/{days}/{driver}', [TouristAccountController::class, 'showpayments']);
     Route::post('upload-totalbookingpayment/{booking}', [TouristAccountController::class, 'totalplancost']);
+    Route::get('all-personal-plans', [TouristAccountController::class, 'personalplans']);
+    Route::get('delete-plan-trip', [TouristAccountController::class, 'deleteplan']);
+    Route::get('all-packages-booking-history', [TouristAccountController::class, 'packagesbooking']);
 });
-

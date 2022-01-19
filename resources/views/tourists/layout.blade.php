@@ -195,8 +195,12 @@
                             class="feather icon-mail"></i><span class="menu-title"
                             data-i18n="Email Application">Plan My Trip</span></a>
                 </li>
-                <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title"
-                            data-i18n="Users">Booking History</span></a>
+                <li class=" nav-item"><a href="{{ url('tourist/all-personal-plans') }}"><i class="feather icon-user"></i><span class="menu-title"
+                            data-i18n="Users">All Personal Trips</span></a>
+
+                </li>
+                <li class=" nav-item"><a href="{{ url('tourist/all-packages-booking-history') }}"><i class="feather icon-user"></i><span class="menu-title"
+                            data-i18n="Users">All  Trips</span></a>
 
                 </li>
                 <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title"

@@ -7,6 +7,8 @@ use App\Models\Accomodation;
 use App\Models\Destination;
 use App\Models\DestinationImage;
 use App\Models\Tourist;
+use App\Models\TouristTripPlan;
+use App\Models\TourPackage;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Storage;
@@ -193,6 +195,119 @@ class AdminAccountController extends Controller
     public function alltourists()
     {
         $tourists = Tourist::all();
-        return view('admin.all-tourists', compact('alltourists'));
+        return view('admin.all-tourists', compact('tourists'));
+    }
+
+    public function alltourplans()
+    {
+        $plans = TouristTripPlan::all();
+        return view('admin.all-tour-plans', compact('plans'));
+    }
+    public function acceptplantrip($tripid)
+    {
+        $trip = TouristTripPlan::findOrFail($tripid);
+        $trip->status = "confirmed";
+        $trip->save();
+        Toastr::success('Trip has been confirmed and payment accepted', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
+    }
+    public function rejectplantrip($tripid)
+    {
+        $trip = TouristTripPlan::findOrFail($tripid);
+        $trip->status = "denied";
+        $trip->save();
+        Toastr::error('Trip has been denied and payment rejected', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
+    }
+    public function createpackage()
+    {
+        $accomodations = Accomodation::all();
+        $destinations = Destination::all();
+        return view('admin.create-package', compact(['accomodations', 'destinations']));
+    }
+    public function storepackage(Request $request)
+    {
+        $this->validate($request, [
+            'package_name' => 'required|string',
+            'destination_category' => 'required',
+            'accomodation_id' => 'required',
+            'package_price' => 'required|numeric',
+            'package_days' => 'required|numeric',
+            'site_description' => 'required|string',
+            'picture' => 'required|image| mimes:png,jpeg, jpg|max:10080'
+        ]);
+        $package = new TourPackage;
+        $package->package_name  = $request->input('package_name');
+        $package->destination_id  = $request->input('destination_category');
+        $package->accomodation_id  = $request->input('accomodation_id');
+        $package->duration  = $request->input('package_days');
+        $package->amount_paid  = $request->input('package_price');
+        $package->description  = $request->input('site_description');
+        $fileNameWithExt = $request->picture->getClientOriginalName();
+        $fileName =  pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+        $Extension = $request->picture->getClientOriginalExtension();
+        $filenameToStore = $fileName . '-' . time() . '.' . $Extension;
+        $path = $request->picture->storeAs('packages', $filenameToStore, 'public');
+        $package->picture = $filenameToStore;
+        $package->save();
+        Toastr::success('Package Details uploaded sucessfully.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect('admin/all-packages');
+    }
+    public function allpackages()
+    {
+        $packages = TourPackage::all();
+        return view('admin.tour-packages', compact('packages'));
+    }
+    public function edittourpackage($packageid)
+    {
+        $accomodations = Accomodation::all();
+        $destinations = Destination::all();
+        $package = TourPackage::findOrFail($packageid);
+        return view('admin.edit-tour-package', compact('package', 'accomodations', 'destinations'));
+    }
+    public function updatetourpackage(Request $request, $packageid)
+    {
+        $this->validate($request, [
+            'package_name' => 'required|string',
+            'destination_category' => 'required',
+            'accomodation_id' => 'required',
+            'package_price' => 'required|numeric',
+            'package_days' => 'required|numeric',
+            'site_description' => 'required|string',
+            'picture' => 'nullable|image| mimes:png,jpeg, jpg|max:10080'
+        ]);
+        $package = TourPackage::findOrFail($packageid);
+        $package->package_name  = $request->input('package_name');
+        $package->destination_id  = $request->input('destination_category');
+        $package->accomodation_id  = $request->input('accomodation_id');
+        $package->duration  = $request->input('package_days');
+        $package->amount_paid  = $request->input('package_price');
+        $package->description  = $request->input('site_description');
+        if ($request->hasFile('picture')) {
+            Storage::delete('public/packages/' . $package->picture);
+            $fileNameWithExt = $request->picture->getClientOriginalName();
+            $fileName =  pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            $Extension = $request->picture->getClientOriginalExtension();
+            $filenameToStore = $fileName . '-' . time() . '.' . $Extension;
+            $path = $request->picture->storeAs('packages', $filenameToStore, 'public');
+            $package->picture = $filenameToStore;
+        }
+
+        $package->save();
+        Toastr::success('Package Details updated sucessfully.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect('admin/all-packages');
+    }
+    public function deletepackage($packageid)
+    {
+        $package = TourPackage::findOrFail($packageid);
+        Storage::delete('public/packages/' . $package->picture);
+        $package->delete();
+        Toastr::error('Package Details deleted sucessfully.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect('admin/all-packages');
+    }
+    public function allpayments()
+    {
+        $trippayments = TouristTripPlan::where('status', 'pending')->get();
+        return view('admin.all-payments', compact('trippayments'));
     }
 }

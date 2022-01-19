@@ -183,6 +183,19 @@
                     </ul>
                 </li>
                 <li class=" nav-item"><a href="#"><i class="feather icon-zap"></i><span class="menu-title"
+                            data-i18n="Starter kit">Packages</span><span
+                            class="badge badge badge-danger badge-pill float-right mr-2"></span></a>
+                    <ul class="menu-content">
+                        <li><a class="menu-item" href="{{ url('admin/create-package') }}" data-i18n="1 column">
+                                Create New Package</a>
+                        </li>
+                        <li><a class="menu-item" href="{{ url('admin/generate-tourists-report') }}"
+                                data-i18n="2 columns">Generate Report</a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class=" nav-item"><a href="#"><i class="feather icon-zap"></i><span class="menu-title"
                             data-i18n="Starter kit">Tourists</span><span
                             class="badge badge badge-danger badge-pill float-right mr-2"></span></a>
                     <ul class="menu-content">
@@ -196,10 +209,10 @@
                     </ul>
                 </li>
 
-                <li class=" nav-item"><a href=""><i class="feather icon-mail"></i><span class="menu-title"
+                <li class=" nav-item"><a href="{{ url('admin/all-tour-plans') }}"><i class="feather icon-mail"></i><span class="menu-title"
                             data-i18n="Email Application">All Tour Plans</span></a>
                 </li>
-                <li class=" nav-item"><a href=""><i class="feather icon-message-square"></i><span
+                <li class=" nav-item"><a href="{{ url('admin/all-payments') }}"><i class="feather icon-message-square"></i><span
                             class="menu-title" data-i18n="Chat Application">All Payments</span></a>
                 </li>
                 <li class=" nav-item"><a href=""><i class="feather icon-check-square"></i><span

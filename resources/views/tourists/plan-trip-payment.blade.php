@@ -37,8 +37,7 @@
                 <p><i>{{ $accomodationcheck->description }}</i></p>
                 <br>
                 <hr>
-                <form action="{{ url('tourist/upload-totalbookingpayment/' . $accomodationcheck->id) }}"
-                    method="POST">
+                <form action="{{ url('tourist/upload-totalbookingpayment/' . $accomodationcheck->id) }}" method="POST">
                     <h5>Pay Kshs. {{ $totalpayment }} and provide the transaction code in the field below</h5>
                     @csrf
                     <div class="form-group">

@@ -7,6 +7,7 @@ use App\Models\Accomodation;
 use App\Models\BookAccomodation;
 use App\Models\Destination;
 use App\Models\Tourist;
+use App\Models\TouristTripPlan;
 use App\Models\TourPackage;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -158,5 +159,45 @@ class TouristAccountController extends Controller
         $this->validate($request, [
             'transaction_code' => 'required|string|min:10|max:10|unique:tourist_trip_plans',
         ]);
+
+        $days = $request->input('days');
+        $destid = $request->input('destinationid');
+        $driverfee = $request->input('driverfee');
+        $checkaccprice = Accomodation::where('id', $booking)->get()->first();
+        $checkdestprice = Destination::where('id', $destid)->get()->first();
+
+        $totalprice = $driverfee + $checkdestprice->destination_price + ($days * $checkaccprice->price_per_night);
+        $trip = new TouristTripPlan;
+        $trip->user_id = auth()->user()->id;
+        $trip->accomodation_id = $booking;
+        $trip->accomodation_fee = $booking;
+        $trip->amount_paid = $totalprice;
+        $trip->status = "pending";
+        $trip->destination_id = $request->input('destinationid');
+        $trip->transaction_code = $request->input('transaction_code');
+        $trip->total_days = $request->input('days');
+        $trip->driver_fee = $request->input('driverfee');
+        $trip->save();
+
+        Toastr::success('Your trip has been uploaded. ', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect('tourist/all-personal-plans');
+    }
+
+    public function personalplans()
+    {
+
+        $plans = TouristTripPlan::where('user_id', auth()->user()->id)->get();
+        return view('tourists.all-personal-plans', compact('plans'));
+    }
+    public function deleteplan($planid)
+    {
+        $plan = TouristTripPlan::findOrFail($planid);
+        $plan->delete();
+        Toastr::error('Your trip has been deleted. ', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect('tourist/all-personal-plans');
+    }
+    public function packagesbooking()
+    {
+        // $plans =
     }
 }
