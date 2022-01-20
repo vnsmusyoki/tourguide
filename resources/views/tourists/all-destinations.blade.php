@@ -42,8 +42,7 @@
                             </strong>
                             <p><i>{{ $destination->site_description }}</i></p>
                             <br>
-                            <a href="{{ url('tourist/accomodations-around/' . $destination->id) }}"
-                                class="btn btn-block btn-danger">See Accomodations Around</a>
+                           
                         </div>
                     </div>
                 </div>

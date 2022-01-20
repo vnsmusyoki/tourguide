@@ -46,6 +46,8 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/toastr.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/jquery.dataTables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/buttons.dataTables.min.css') }}">
     <!-- END: Custom CSS-->
     <style>
         .imgGallery img {
@@ -85,10 +87,10 @@
                     <li class="nav-item mobile-menu d-md-none mr-auto"><a
                             class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i
                                 class="feather icon-menu font-large-1"></i></a></li>
-                    <li class="nav-item"><a class="navbar-brand" href=""><img class="brand-logo"
+                    <li class="nav-item"><a class="navbar-brand" href="{{ route('tourist') }}"><img class="brand-logo"
                                 alt="stack admin logo"
                                 src="{{ asset('backend/app-assets/images/logo/stack-logo.png') }}">
-                            <h2 class="brand-text">Admin</h2>
+                            <h2 class="brand-text">Tourist</h2>
                         </a></li>
                     <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse"
                             data-target="#navbar-mobile"><i class="fa fa-ellipsis-v"></i></a></li>
@@ -131,19 +133,21 @@
                         </li>
                         <li class="dropdown dropdown-user nav-item">
                             <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="avatar avatar-online"><img
-                                        src="{{ asset('backend/app-assets/images/portrait/small/avatar-s-1.png') }}"
-                                        alt="avatar"><i></i></div><span
-                                    class="user-name">{{ Auth::user()->name }}</span>
+
+                                <div class="avatar avatar-online">
+
+                                    @if (Auth::user()->picture == null)
+                                        <img src="{{ asset('backend/app-assets/images/portrait/small/avatar-s-1.png') }}"
+                                            alt="avatar">
+                                    @else
+                                        <img src="{{ asset('storage/profiles/' . Auth::user()->picture) }}" alt=""
+                                            style="height:60px;width:60px;border-radius:50%;">
+                                    @endif
+                                </div>
+                                <span class="user-name">{{ Auth::user()->name }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="{{ url('admin/account-security') }}"><i
-                                        class="feather icon-user"></i>
-                                    Edit Profile</a><a class="dropdown-item" href=""><i class="feather icon-mail"></i>
-                                    Pending </a><a class="dropdown-item" href=""><i
-                                        class="feather icon-check-square"></i> Payments</a>
-                                <a class="dropdown-item" href=""><i class="feather icon-message-square"></i> New
-                                    Bookings</a>
+
                                 <div class="dropdown-divider"></div> <a class="dropdown-item"
                                     href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();"><i class="feather icon-power"></i>
@@ -195,12 +199,14 @@
                             class="feather icon-mail"></i><span class="menu-title"
                             data-i18n="Email Application">Plan My Trip</span></a>
                 </li>
-                <li class=" nav-item"><a href="{{ url('tourist/all-personal-plans') }}"><i class="feather icon-user"></i><span class="menu-title"
-                            data-i18n="Users">All Personal Trips</span></a>
+                <li class=" nav-item"><a href="{{ url('tourist/all-personal-plans') }}"><i
+                            class="feather icon-user"></i><span class="menu-title" data-i18n="Users">All Personal
+                            Trips</span></a>
 
                 </li>
-                <li class=" nav-item"><a href="{{ url('tourist/account-security') }}"><i class="feather icon-user"></i><span class="menu-title"
-                            data-i18n="Users">Account Security</span></a>
+                <li class=" nav-item"><a href="{{ url('tourist/account-security') }}"><i
+                            class="feather icon-user"></i><span class="menu-title" data-i18n="Users">Account
+                            Security</span></a>
 
                 </li>
                 <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title"
@@ -256,8 +262,22 @@
     <!-- END: Page JS-->
     <script src="{{ asset('backend/jquery.min.js') }}"></script>
     <script src="{{ asset('backend/toastr.min.js') }}"></script>
+
+    <script src="{{ asset('backend/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('backend/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('backend/buttons.print.min.js') }}"></script>
     {!! Toastr::message() !!}
     @livewireScripts
+    <script>
+        $(document).ready(function() {
+            $('#exampleds').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'print'
+                ]
+            });
+        });
+    </script>
 </body>
 <!-- END: Body-->
 

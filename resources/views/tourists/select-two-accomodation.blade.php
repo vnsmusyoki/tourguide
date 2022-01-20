@@ -64,7 +64,6 @@
                                     <label for="">Need a Driver?</label>
                                     <select name="driver_needed" id="" class="form-control">
                                         <option value="">Select catgeory</option>
-                                        <option value="No">No</option>
                                         <option value="Yes">Yes(You will be charged extra 500 per day for the driver)
                                         </option>
                                     </select>

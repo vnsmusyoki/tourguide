@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
     <!--/ Stats -->
 
@@ -52,11 +52,10 @@
                 <div class="card-content">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-bordered display">
+                            <table  class="display" id="exampleds">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Picture</th>
                                         <th>Tourist</th>
                                         <th>Destination</th>
                                         <th>Accomodation</th>
@@ -64,7 +63,7 @@
                                         <th>Driver Fee</th>
                                         <th>Transaction Code</th>
                                         <th>Amount Paid</th>
-                                        <th>Status</th> 
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -72,25 +71,16 @@
                                         @foreach ($plannedtrips as $key => $plan)
                                             <tr>
                                                 <td>{{ ++$key }}</td>
-                                                <td class="text-truncate"><a href="#">
-                                                        @if ($plan->planuser->picture == null)
-                                                            <img src="{{ asset('backend/app-assets/images/portrait/small/avatar-s-1.png') }}"
-                                                                alt="" style="height:60px;width:60px;border-radius:50%;">
-                                                    </a>
-                                                @else
-                                                    <img src="{{ asset('storage/profiles/' . $plan->planuser->picture) }}"
-                                                        alt="" style="height:60px;width:120px;"></a>
-                                        @endif
-                                        </td>
+
                                         <td>{{ $plan->planuser->name }}</td>
                                         <td>{{ $plan->plandestination->destination_name }}</td>
                                         <td>{{ $plan->planaccomodation->accomodation_name }}</td>
                                         <td>{{ $plan->total_days }}</td>
                                         <td>{{ $plan->driver_fee }}</td>
                                         <td>{{ $plan->transaction_code }}</td>
-                                        <td>{{ $plan->amount_paid }}</td>
+                                        <td>Kshs. {{ $plan->amount_paid }}</td>
                                         <td>{{ $plan->status }}</td>
-                                        
+
                                         </tr>
                                     @endforeach
                                 @else
@@ -127,7 +117,7 @@
                                         <th>Accomodation</th>
                                         <th>Total Price</th>
                                         <th>Days</th>
-                                        <th>Description</th> 
+                                        <th>Description</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -145,7 +135,7 @@
                                                 <td>Kshs. {{ $package->bookingpackage->amount_paid }}</td>
                                                 <td>{{ $package->bookingpackage->duration }}</td>
                                                 <td>{{ $package->bookingpackage->description }}</td>
-                                             
+
                                             </tr>
                                         @endforeach
                                     @else

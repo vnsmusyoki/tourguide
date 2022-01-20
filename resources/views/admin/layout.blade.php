@@ -120,35 +120,36 @@
                         </li>
                         <li class="dropdown dropdown-user nav-item">
                             <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+
                                 <div class="avatar avatar-online">
+
                                     @if (Auth::user()->picture == null)
                                         <img src="{{ asset('backend/app-assets/images/portrait/small/avatar-s-1.png') }}"
-                                            alt="avatar"><i></i>
+                                            alt="avatar">
+                                    @else
+                                        <img src="{{ asset('storage/profiles/' . Auth::user()->picture) }}" alt=""
+                                            style="height:60px;width:60px;border-radius:50%;">
+                                    @endif
+                                </div>
+                                <span class="user-name">{{ Auth::user()->name }}</span>
                             </a>
-                        @else
-                            <img src="{{ asset('storage/profiles/' . Auth::user()->picture) }}" alt=""
-                                style="height:60px;width:60px;border-radius:50%;"></a>
+                            <div class="dropdown-menu dropdown-menu-right">
 
-                            @endif
-
-                </div><span class="user-name">{{ Auth::user()->name }}</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-
-                    <div class="dropdown-divider"></div> <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
+                                <div class="dropdown-divider"></div> <a class="dropdown-item"
+                                    href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();"><i class="feather icon-power"></i>
-                        {{ __('Logout') }}
-                    </a>
+                                    {{ __('Logout') }}
+                                </a>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                </li>
-                </ul>
             </div>
-        </div>
         </div>
     </nav>
     <!-- END: Header-->
@@ -316,4 +317,5 @@
     </script>
 </body>
 <!-- END: Body-->
+
 </html>

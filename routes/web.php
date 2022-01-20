@@ -82,8 +82,12 @@ Route::prefix('tourist')->group(function () {
     Route::post('book-selected-accomodation-days/{accomodationid}', [TouristAccountController::class, 'calculatecost']);
     Route::get('planned-trip-payment/{destination}/{accomodation}/{days}/{driver}', [TouristAccountController::class, 'showpayments']);
     Route::post('upload-totalbookingpayment/{booking}', [TouristAccountController::class, 'totalplancost']);
-    Route::get('all-personal-plans', [TouristAccountController::class, 'personalplans']);
-    Route::get('delete-plan-trip', [TouristAccountController::class, 'deleteplan']);
+    Route::get('all-personal-plans', [TouristAccountController::class, 'personalplans']); 
     Route::get('all-packages-booking-history', [TouristAccountController::class, 'packagesbooking']);
     Route::post('book-package-trip', [TouristAccountController::class, 'bookpackage']);
+    Route::get('account-security', [TouristAccountController::class, 'accountsecurity']);
+    Route::post('update-password', [TouristAccountController::class, 'updatepassword']);
+    Route::post('update-email', [TouristAccountController::class, 'updateemail']);
+    Route::post('update-avatar', [TouristAccountController::class, 'updateavatar']);
+    Route::get('delete-plan-trip/{planid}', [TouristAccountController::class, 'deleteplan']);
 });

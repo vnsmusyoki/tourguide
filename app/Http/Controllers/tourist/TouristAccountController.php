@@ -13,6 +13,7 @@ use App\Models\TourPackage;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Storage;
 
 class TouristAccountController extends Controller
 {
@@ -28,8 +29,8 @@ class TouristAccountController extends Controller
         } else {
             $plannedtrips = TouristTripPlan::where('user_id', auth()->user()->id)->get();
             $bookedpackages = PackageBooking::where('user_id', auth()->user()->id)->get();
-        
-            return view('tourists.dashboard', compact('plannedtrips','bookedpackages'));
+
+            return view('tourists.dashboard', compact('plannedtrips', 'bookedpackages'));
         }
     }
     public function completeprofile()
@@ -223,5 +224,56 @@ class TouristAccountController extends Controller
         $trip->save();
         Toastr::success('Your package booking has been uploaded. ', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect('tourist/dashboard');
+    }
+    public function accountsecurity()
+    {
+        return view('tourists.account-security');
+    }
+    public function updatepassword(Request $request)
+    {
+        $this->validate($request, [
+            'password' => 'required|min:8|max:20|confirmed',
+            'password_confirmation' => 'required'
+        ]);
+
+        $user = User::find(auth()->user()->id);
+        $user->password = bcrypt($request->input('password'));
+        $user->save();
+
+        Toastr::success('password has been updated.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
+    }
+    public function updateemail(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email|unique:users',
+        ]);
+
+        $user = User::find(auth()->user()->id);
+        $user->email = $request->input('email');
+        $user->save();
+
+        Toastr::success('Email Address has been updated.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
+    }
+    public function updateavatar(Request $request)
+    {
+        $this->validate($request, [
+            'picture' => 'required|image|mimes:jpeg,png,jpg|max:6048',
+        ]);
+        $user = User::find(auth()->user()->id);
+        Storage::delete('public/officers/' . $user->picture);
+        $fileNameWithExt = $request->picture->getClientOriginalName();
+        $fileName =  pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+        $Extension = $request->picture->getClientOriginalExtension();
+        $filenameToStore = $fileName . '-' . time() . '.' . $Extension;
+        $path = $request->picture->storeAs('officers', $filenameToStore, 'public');
+        $user->picture = $filenameToStore;
+        $user->save();
+
+
+
+        Toastr::success('profile Picture has been updated.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
     }
 }
