@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AdminAccountController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\tourist\TouristAccountController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +21,13 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
+Route::get('/logoutchecked', function (Request $request) {
+    $request->session()->flush();
+    Auth::logout();
+    return Redirect('/login')->with('passwordreset', 'Congrats! Your account is now set.You can now login');
+    $request->session()->flush();
+    Auth::logout();
+});
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -82,7 +89,7 @@ Route::prefix('tourist')->group(function () {
     Route::post('book-selected-accomodation-days/{accomodationid}', [TouristAccountController::class, 'calculatecost']);
     Route::get('planned-trip-payment/{destination}/{accomodation}/{days}/{driver}', [TouristAccountController::class, 'showpayments']);
     Route::post('upload-totalbookingpayment/{booking}', [TouristAccountController::class, 'totalplancost']);
-    Route::get('all-personal-plans', [TouristAccountController::class, 'personalplans']); 
+    Route::get('all-personal-plans', [TouristAccountController::class, 'personalplans']);
     Route::get('all-packages-booking-history', [TouristAccountController::class, 'packagesbooking']);
     Route::post('book-package-trip', [TouristAccountController::class, 'bookpackage']);
     Route::get('account-security', [TouristAccountController::class, 'accountsecurity']);

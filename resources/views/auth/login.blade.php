@@ -107,7 +107,7 @@
                                                     <label for="remember-me"> Remember Me</label>
                                                 </fieldset>
                                             </div>
-                                            <div class="col-sm-6 col-12 text-center text-sm-right"><a href=""
+                                            <div class="col-sm-6 col-12 text-center text-sm-right"><a href="{{ route('password.request') }}"
                                                     class="card-link">Forgot
                                                     Password?</a></div>
                                         </div>
