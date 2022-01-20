@@ -39,10 +39,7 @@
                             <h2 class="section-title__title">Any Question? Feel Free to Contact</h2>
                         </div>
                         <div class="contact-page__social">
-                            <a href="#"><i class="fab fa-facebook"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-dribbble"></i></a>
+
                         </div>
                     </div>
                 </div>
@@ -67,7 +64,7 @@
                                         <div class="comment-form__input-box">
                                             <textarea name="message" placeholder="Write Comment"></textarea>
                                         </div>
-                                        <button type="submit" class="thm-btn comment-form__btn">Send a
+                                        <button type="button" class="thm-btn comment-form__btn">Send a
                                             message</button>
                                     </div>
                                 </div>
@@ -81,61 +78,10 @@
     </section>
     <!--Contact Page End-->
 
-    <!--Information Start-->
-    <section class="information">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-4 col-lg-4">
-                    <!--Information Single-->
-                    <div class="information__single">
-                        <div class="information__icon">
-                            <span class="icon-place"></span>
-                        </div>
-                        <div class="information__text">
-                            <p>88 Broklyn Street <br> Road New York. USA</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4">
-                    <!--Information Single-->
-                    <div class="information__single">
-                        <div class="information__icon">
-                            <span class="icon-phone-call"></span>
-                        </div>
-                        <div class="information__text">
-                            <h4>
-                                <a href="tel:+92-666-888-0000" class="information__number-1">+92 666 888 0000</a>
-                                <br>
-                                <a href="tel:666-888-0000" class="information__number-2">666 888 0000</a>
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4">
-                    <!--Information Single-->
-                    <div class="information__single">
-                        <div class="information__icon">
-                            <span class="icon-at"></span>
-                        </div>
-                        <div class="information__text">
-                            <h4>
-                                <a href="mailto:needhelp@tevily.com" class="information__mail-1">needhelp@tevily.com</a>
-                                <br>
-                                <a href="mailto:info@tevily.com" class="information__mail-2">info@tevily.com</a>
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--Information End-->
-
     <!--Google Map Start-->
     <section class="contact-page-google-map">
-        <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4562.753041141002!2d-118.80123790098536!3d34.152323469614075!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80e82469c2162619%3A0xba03efb7998eef6d!2sCostco+Wholesale!5e0!3m2!1sbn!2sbd!4v1562518641290!5m2!1sbn!2sbd"
-            class="contact-page-google-map__one" allowfullscreen></iframe>
+      
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.8072632214307!2d37.70618651471146!3d0.1348907643114514!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x17883c967d5c1517%3A0x94e1dbf4dfea47bd!2sMeru%20University%20of%20Science%20and%20Technology!5e0!3m2!1sen!2ske!4v1642668540210!5m2!1sen!2ske" class="contact-page-google-map__one" allowfullscreen></iframe>
 
     </section>
     <!--Google Map End-->
