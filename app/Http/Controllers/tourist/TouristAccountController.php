@@ -26,7 +26,10 @@ class TouristAccountController extends Controller
         if ($tourist->count() == 0) {
             return redirect('tourist/complete-account');
         } else {
-            return view('tourists.dashboard');
+            $plannedtrips = TouristTripPlan::where('user_id', auth()->user()->id)->get();
+            $bookedpackages = PackageBooking::where('user_id', auth()->user()->id)->get();
+        
+            return view('tourists.dashboard', compact('plannedtrips','bookedpackages'));
         }
     }
     public function completeprofile()
