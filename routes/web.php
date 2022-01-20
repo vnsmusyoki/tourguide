@@ -59,9 +59,13 @@ Route::prefix('admin')->group(function () {
     Route::get('all-package-bookings', [AdminAccountController::class, 'allpackagebookings']);
     Route::get('edit-tour-package/{packageid}', [AdminAccountController::class, 'edittourpackage']);
     Route::patch('update-package/{packageid}', [AdminAccountController::class, 'updatetourpackage']);
-    Route::post('update-password', [AdminController::class, 'updatepassword']);
-    Route::post('update-email', [AdminController::class, 'updateemail']);
-    Route::post('update-avatar', [AdminController::class, 'updateavatar']);
+    Route::get('account-security', [AdminAccountController::class, 'accountsecurity']);
+    Route::post('update-password', [AdminAccountController::class, 'updatepassword']);
+    Route::post('update-email', [AdminAccountController::class, 'updateemail']);
+    Route::post('update-avatar', [AdminAccountController::class, 'updateavatar']);
+    Route::get('generate-accomodation-reports', [AdminAccountController::class, 'accomodationreports']);
+    Route::get('generate-destination-receipts', [AdminAccountController::class, 'destinationreports']);
+    Route::get('generate-tourists-report', [AdminAccountController::class, 'touristsreport']);
 });
 Route::prefix('tourist')->group(function () {
     Route::get('complete-account', [TouristAccountController::class, 'completeprofile']);

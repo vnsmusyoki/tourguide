@@ -10,6 +10,7 @@ use App\Models\PackageBooking;
 use App\Models\Tourist;
 use App\Models\TouristTripPlan;
 use App\Models\TourPackage;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +23,14 @@ class AdminAccountController extends Controller
     }
     public function index()
     {
-        return view('admin.dashboard');
+        $destinations = Destination::all();
+        $accomodations =Accomodation::all();
+        $plannedtrips = TouristTripPlan::where('status', 'pending')->get();
+        $packages = TourPackage::all();
+        $tourists = Tourist::all();
+        $plans = TouristTripPlan::where('status', 'pending')->get();
+        $packagebookings = PackageBooking::where('status', 'pending')->get();
+        return view('admin.dashboard',compact(['destinations', 'accomodations', 'plannedtrips', 'packages','tourists','plans','packagebookings']));
     }
     public function createdestination()
     {
@@ -108,6 +116,11 @@ class AdminAccountController extends Controller
         $destinations = Destination::all();
         return view('admin.all-destination', compact('destinations'));
     }
+    public function destinationreports()
+    {
+        $destinations = Destination::all();
+        return view('admin.destination-report', compact('destinations'));
+    }
     public function deletedestination($destinationid)
     {
         $destination = Destination::findOrFail($destinationid);
@@ -149,6 +162,11 @@ class AdminAccountController extends Controller
     {
         $accomodations = Accomodation::all();
         return view('admin.all-accomodations', compact('accomodations'));
+    }
+    public function accomodationreports()
+    {
+        $accomodations = Accomodation::all();
+        return view('admin.accomodation-report', compact('accomodations'));
     }
     public function editaccomodation($accid)
     {
@@ -197,6 +215,11 @@ class AdminAccountController extends Controller
     {
         $tourists = Tourist::all();
         return view('admin.all-tourists', compact('tourists'));
+    }
+    public function touristsreport()
+    {
+        $tourists = Tourist::all();
+        return view('admin.tourists-report', compact('tourists'));
     }
 
     public function alltourplans()
@@ -325,7 +348,7 @@ class AdminAccountController extends Controller
     public function acceptpackagebooking($packageid)
     {
         $booking = PackageBooking::findOrFail($packageid);
-        $booking->status="confirmed";
+        $booking->status = "confirmed";
         $booking->save();
         Toastr::success('Package booking confirmed sucessfully.', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->back();
@@ -333,9 +356,60 @@ class AdminAccountController extends Controller
     public function rejectpackagebooking($packageid)
     {
         $booking = PackageBooking::findOrFail($packageid);
-        $booking->status="denied";
+        $booking->status = "denied";
         $booking->save();
         Toastr::error('Package booking rejected sucessfully.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
+    }
+    public function accountsecurity()
+    {
+        return view('admin.account-security');
+    }
+    public function updatepassword(Request $request)
+    {
+        $this->validate($request, [
+            'password' => 'required|min:8|max:20|confirmed',
+            'password_confirmation' => 'required'
+        ]);
+
+        $user = User::find(auth()->user()->id);
+        $user->password = bcrypt($request->input('password'));
+        $user->save();
+
+        Toastr::success('password has been updated.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
+    }
+    public function updateemail(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email|unique:users',
+        ]);
+
+        $user = User::find(auth()->user()->id);
+        $user->email = $request->input('email');
+        $user->save();
+
+        Toastr::success('Email Address has been updated.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
+    }
+    public function updateavatar(Request $request)
+    {
+        $this->validate($request, [
+            'picture' => 'required|image|mimes:jpeg,png,jpg|max:6048',
+        ]);
+        $user = User::find(auth()->user()->id);
+        Storage::delete('public/officers/' . $user->picture);
+        $fileNameWithExt = $request->picture->getClientOriginalName();
+        $fileName =  pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+        $Extension = $request->picture->getClientOriginalExtension();
+        $filenameToStore = $fileName . '-' . time() . '.' . $Extension;
+        $path = $request->picture->storeAs('officers', $filenameToStore, 'public');
+        $user->picture = $filenameToStore;
+        $user->save();
+
+
+
+        Toastr::success('profile Picture has been updated.', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->back();
     }
 }

@@ -46,6 +46,8 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/toastr.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/jquery.dataTables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/buttons.dataTables.min.css') }}">
     <!-- END: Custom CSS-->
     <style>
         .imgGallery img {
@@ -55,7 +57,7 @@
         }
 
     </style>
-     @livewireStyles
+    @livewireStyles
 </head>
 <!-- END: Head-->
 
@@ -118,34 +120,35 @@
                         </li>
                         <li class="dropdown dropdown-user nav-item">
                             <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="avatar avatar-online"><img
-                                        src="{{ asset('backend/app-assets/images/portrait/small/avatar-s-1.png') }}"
-                                        alt="avatar"><i></i></div><span
-                                    class="user-name">{{ Auth::user()->name }}</span>
+                                <div class="avatar avatar-online">
+                                    @if (Auth::user()->picture == null)
+                                        <img src="{{ asset('backend/app-assets/images/portrait/small/avatar-s-1.png') }}"
+                                            alt="avatar"><i></i>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="{{ url('admin/account-security') }}"><i
-                                        class="feather icon-user"></i>
-                                    Edit Profile</a><a class="dropdown-item" href=""><i class="feather icon-mail"></i>
-                                    Pending </a><a class="dropdown-item" href=""><i
-                                        class="feather icon-check-square"></i> Payments</a>
-                                <a class="dropdown-item" href=""><i class="feather icon-message-square"></i> New
-                                    Bookings</a>
-                                <div class="dropdown-divider"></div> <a class="dropdown-item"
-                                    href="{{ route('logout') }}" onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();"><i class="feather icon-power"></i>
-                                    {{ __('Logout') }}
-                                </a>
+                        @else
+                            <img src="{{ asset('storage/profiles/' . Auth::user()->picture) }}" alt=""
+                                style="height:60px;width:60px;border-radius:50%;"></a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
-                    </ul>
+                            @endif
+
+                </div><span class="user-name">{{ Auth::user()->name }}</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+
+                    <div class="dropdown-divider"></div> <a class="dropdown-item" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();"><i class="feather icon-power"></i>
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </div>
+                </li>
+                </ul>
             </div>
+        </div>
         </div>
     </nav>
     <!-- END: Header-->
@@ -215,24 +218,35 @@
                     </ul>
                 </li>
 
-                <li class=" nav-item"><a href="{{ url('admin/all-tour-plans') }}"><i class="feather icon-mail"></i><span class="menu-title"
-                            data-i18n="Email Application">All Tour Plans</span></a>
+                <li class=" nav-item"><a href="{{ url('admin/all-tour-plans') }}"><i
+                            class="feather icon-mail"></i><span class="menu-title" data-i18n="Email Application">All
+                            Tour Plans</span></a>
                 </li>
-                <li class=" nav-item"><a href="{{ url('admin/all-payments') }}"><i class="feather icon-message-square"></i><span
-                            class="menu-title" data-i18n="Chat Application">All Payments</span></a>
+                <li class=" nav-item"><a href="{{ url('admin/all-payments') }}"><i
+                            class="feather icon-message-square"></i><span class="menu-title"
+                            data-i18n="Chat Application">All Payments</span></a>
                 </li>
 
-                <li class=" nav-item"><a href="{{ url('admin/account-security') }}"><i class="feather icon-users"></i><span class="menu-title"
-                            data-i18n="Contacts">Account Security</span></a>
+                <li class=" nav-item"><a href="{{ url('admin/account-security') }}"><i
+                            class="feather icon-users"></i><span class="menu-title" data-i18n="Contacts">Account
+                            Security</span></a>
                 </li>
-                <li class=" nav-item"><a href=""><i class="feather icon-airplay"></i><span
-                            class="menu-title" data-i18n="Project Summary">Update Password</span></a>
+                <li class=" nav-item"><a href="{{ url('admin/account-security') }}"><i
+                            class="feather icon-airplay"></i><span class="menu-title"
+                            data-i18n="Project Summary">Update Password</span></a>
                 </li>
-                <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title"
-                            data-i18n="Users">Manage Admins</span></a>
-                </li>
-                <li class=" nav-item"><a href="#"><i class="feather icon-user"></i><span class="menu-title"
-                            data-i18n="Users">Logout</span></a>
+                <li class=" nav-item">
+
+
+
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                          document.getElementById('logout-forms').submit();">
+                        <i class="feather icon-user"></i> <span class="menu-title" data-i18n="Users">Logout</span>
+                    </a>
+
+                    <form id="logout-forms" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </li>
 
 
@@ -285,9 +299,21 @@
     <!-- END: Page JS-->
     <script src="{{ asset('backend/jquery.min.js') }}"></script>
     <script src="{{ asset('backend/toastr.min.js') }}"></script>
+    <script src="{{ asset('backend/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('backend/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('backend/buttons.print.min.js') }}"></script>
     {!! Toastr::message() !!}
     @livewireScripts
+    <script>
+        $(document).ready(function() {
+            $('#exampleds').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'print'
+                ]
+            });
+        });
+    </script>
 </body>
 <!-- END: Body-->
-
 </html>
