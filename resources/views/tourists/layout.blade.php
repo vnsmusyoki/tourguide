@@ -204,6 +204,14 @@
                             Trips</span></a>
 
                 </li>
+                <li class=" nav-item"><a href="{{ url('tourist/my-reviews') }}"><i
+                            class="feather icon-user"></i><span class="menu-title" data-i18n="Users">All Acc. Reviews</span></a>
+
+                </li>
+                <li class=" nav-item"><a href="{{ url('tourist/generate-report') }}"><i
+                            class="feather icon-user"></i><span class="menu-title" data-i18n="Users">Generate Report</span></a>
+
+                </li>
                 <li class=" nav-item"><a href="{{ url('tourist/account-security') }}"><i
                             class="feather icon-user"></i><span class="menu-title" data-i18n="Users">Account
                             Security</span></a>

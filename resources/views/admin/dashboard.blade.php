@@ -71,7 +71,7 @@
         </div>
     </div>
     <!--/ Stats -->
-    
+
     <div class="row match-height">
         <div class="col-xl-12 col-lg-12">
             <div class="card">
@@ -173,16 +173,16 @@
                                         @foreach ($packagebookings as $key => $package)
                                             <tr>
                                                 <td>{{ ++$key }}</td>
-                                                <td>{{ $package->package_name }}</td>
+                                                <td>{{ $package->bookingpackage->package_name }}</td>
                                                 <td class="text-truncate">
-                                                    <img src="{{ asset('storage/packages/' . $package->picture) }}" alt=""
+                                                    <img src="{{ asset('storage/packages/' . $package->bookingpackage->picture) }}" alt=""
                                                         style="height:60px;width:120px;">
                                                 </td>
-                                                <td>{{ $package->tourpackagedest->destination_name }}</td>
-                                                <td>{{ $package->tourpackageacc->accomodation_name }}</td>
-                                                <td>Kshs. {{ $package->amount_paid }}</td>
-                                                <td>{{ $package->duration }}</td>
-                                                <td>{{ $package->description }}</td>
+                                                <td>{{ $package->bookingdest->destination_name }}</td>
+                                                <td>{{ $package->bookingacc->accomodation_name }}</td>
+                                                <td>Kshs. {{ $package->bookingpackage->amount_paid }}</td>
+                                                <td>{{ $package->bookingpackage->duration }}</td>
+                                                <td>{{ $package->bookingpackage->description }}</td>
                                                 <td><a href="{{ url('admin/edit-tour-package/' . $package->id) }}"
                                                         class="badge badge-success">Edit</a>/
                                                     <a href="{{ url('admin/delete-tour-package/' . $package->id) }}"

@@ -227,6 +227,10 @@
                             class="feather icon-message-square"></i><span class="menu-title"
                             data-i18n="Chat Application">All Payments</span></a>
                 </li>
+                <li class=" nav-item"><a href="{{ url('admin/accomodation-reviews') }}"><i
+                            class="feather icon-message-square"></i><span class="menu-title"
+                            data-i18n="Chat Application">All Reviews</span></a>
+                </li>
 
                 <li class=" nav-item"><a href="{{ url('admin/account-security') }}"><i
                             class="feather icon-users"></i><span class="menu-title" data-i18n="Contacts">Account

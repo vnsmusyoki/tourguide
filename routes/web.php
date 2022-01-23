@@ -73,6 +73,7 @@ Route::prefix('admin')->group(function () {
     Route::get('generate-accomodation-reports', [AdminAccountController::class, 'accomodationreports']);
     Route::get('generate-destination-receipts', [AdminAccountController::class, 'destinationreports']);
     Route::get('generate-tourists-report', [AdminAccountController::class, 'touristsreport']);
+    Route::get('accomodation-reviews', [AdminAccountController::class, 'accreviews']);
 });
 Route::prefix('tourist')->group(function () {
     Route::get('complete-account', [TouristAccountController::class, 'completeprofile']);
@@ -97,4 +98,11 @@ Route::prefix('tourist')->group(function () {
     Route::post('update-email', [TouristAccountController::class, 'updateemail']);
     Route::post('update-avatar', [TouristAccountController::class, 'updateavatar']);
     Route::get('delete-plan-trip/{planid}', [TouristAccountController::class, 'deleteplan']);
+    Route::get('my-reviews', [TouristAccountController::class, 'myreviews']);
+    Route::get('delete-review-accomodation/{accid}', [TouristAccountController::class, 'deleteacc']);
+    Route::get('review-accomodation', [TouristAccountController::class, 'reviewaccomodation']);
+    Route::get('review-destination', [TouristAccountController::class, 'reviewdestination']);
+    Route::post('send-accomodation-rating', [TouristAccountController::class, 'sendaccrating']);
+    Route::get('destination-review', [TouristAccountController::class, 'destreview']);
+    Route::get('generate-report', [TouristAccountController::class, 'generatereport']);
 });

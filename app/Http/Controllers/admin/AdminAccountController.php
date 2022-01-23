@@ -7,6 +7,7 @@ use App\Models\Accomodation;
 use App\Models\Destination;
 use App\Models\DestinationImage;
 use App\Models\PackageBooking;
+use App\Models\Review;
 use App\Models\Tourist;
 use App\Models\TouristTripPlan;
 use App\Models\TourPackage;
@@ -24,13 +25,13 @@ class AdminAccountController extends Controller
     public function index()
     {
         $destinations = Destination::all();
-        $accomodations =Accomodation::all();
+        $accomodations = Accomodation::all();
         $plannedtrips = TouristTripPlan::where('status', 'pending')->get();
         $packages = TourPackage::all();
         $tourists = Tourist::all();
         $plans = TouristTripPlan::where('status', 'pending')->get();
         $packagebookings = PackageBooking::where('status', 'pending')->get();
-        return view('admin.dashboard',compact(['destinations', 'accomodations', 'plannedtrips', 'packages','tourists','plans','packagebookings']));
+        return view('admin.dashboard', compact(['destinations', 'accomodations', 'plannedtrips', 'packages', 'tourists', 'plans', 'packagebookings']));
     }
     public function createdestination()
     {
@@ -411,5 +412,10 @@ class AdminAccountController extends Controller
 
         Toastr::success('profile Picture has been updated.', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->back();
+    }
+
+    public function accreviews(){
+        $reviews = Review::all();
+        return view('admin.all-reviews', compact('reviews'));
     }
 }

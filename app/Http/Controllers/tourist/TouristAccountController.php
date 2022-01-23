@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Accomodation;
 use App\Models\BookAccomodation;
 use App\Models\Destination;
+use App\Models\DestinationReview;
 use App\Models\PackageBooking;
+use App\Models\Review;
 use App\Models\Tourist;
 use App\Models\TouristTripPlan;
 use App\Models\TourPackage;
@@ -275,5 +277,47 @@ class TouristAccountController extends Controller
 
         Toastr::success('profile Picture has been updated.', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->back();
+    }
+    public function myreviews()
+    {
+        $destinations = PackageBooking::where('user_id', auth()->user()->id)->get();
+        $reviews = Review::where('user_id', auth()->user()->id)->get();
+        return view('tourists.all-reviews', compact('reviews', 'destinations'));
+    }
+    public function reviewaccomodation()
+    {
+        $accomodations = BookAccomodation::where('user_id',auth()->user()->id)->get();
+        return view('tourists.rateaccomodation', compact('accomodations'));
+    }
+    public function sendaccrating(Request $request)
+    {
+        $this->validate($request, [
+            'description' => 'required',
+            'accid' => 'required'
+        ]);
+
+        $rating = new Review;
+        $rating->user_id = auth()->user()->id;
+        $rating->accomodation_id = $request->input('accid');
+        $rating->description = $request->input('description');
+        $rating->save();
+        Toastr::success('Review has been saved.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect('tourist/my-reviews');
+    }
+    public function deleteacc($accid)
+    {
+        $rating = Review::findOrFail($accid);
+        $rating->delete();
+        Toastr::error('Review has been deleted.', 'Success', ["positionClass" => "toast-top-right"]);
+        return redirect()->back();
+    }
+    public function generatereport(){
+        $plans = TouristTripPlan::where('user_id', auth()->user()->id)->get();
+        return view('tourists.print-report', compact('plans'));
+    }
+    public function destreview()
+    {
+        $reviews = DestinationReview::where('user_id', auth()->user()->id)->get();
+        return view('tourists.all-destination-reviews', compact('reviews', 'destinations'));
     }
 }
